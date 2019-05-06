@@ -25,6 +25,7 @@ public class GameLogic : MonoBehaviour
    void Awake()
    {
        grid.BuildGrid(this);
+       
    }
 
    public void SwitchTurn()
@@ -38,9 +39,17 @@ public class GameLogic : MonoBehaviour
            EndGame(isWin);
            return;
        }
-    
+        
+        
        isXTurn = !isXTurn;
        isPlayer1Turn = !isPlayer1Turn;////
+
+       if(GameModeManager.AIActive)
+       {
+            if(isPlayer1Turn == false )
+                grid.AIMoveEasyMode();
+       }
+        
         turnText.text = "Now move " + GetTurnPlayerName();
    }
 
@@ -63,7 +72,7 @@ public class GameLogic : MonoBehaviour
 
    public string GetFirstMovePlayerName()
    {
-        if(isPlayer1Turn)
+        if(isPlayer1Begin)
             return Player1;
         else
             return Player2;
@@ -83,9 +92,6 @@ public class GameLogic : MonoBehaviour
         winnerScreen.SetActive(true);
 
 
-        Debug.Log(GetTurnPlayer());
-        Debug.Log(GetTurnPlayerName());
-
         
     }
 
@@ -97,7 +103,16 @@ public class GameLogic : MonoBehaviour
         DefineFirstMove();///
         isXTurn = true;
         TurnsCount = 0;
+
+        if(isPlayer1Begin == false)
+        {            
+            grid.AIMoveEasyMode();
+        }
+
         winnerScreen.SetActive(false);
+        
+        
+        
     }
 
     void DefineFirstMove()
@@ -105,7 +120,7 @@ public class GameLogic : MonoBehaviour
         if(isWin == false || GetFirstMovePlayerName() != GetTurnPlayerName())
         {
             isPlayer1Begin = isPlayer1Turn = !isPlayer1Begin;
-            //  = !isPlayer1Turn;
+           
         }
             
         
@@ -131,6 +146,7 @@ public class GameLogic : MonoBehaviour
     }
     public void GoToMenu()
     {
+        GameModeManager.AIActive = false;
         SceneManager.LoadScene(0);
     }
 }

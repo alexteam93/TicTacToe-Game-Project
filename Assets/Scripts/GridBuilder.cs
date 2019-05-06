@@ -78,4 +78,17 @@ public class GridBuilder : MonoBehaviour
             cell.cellButton.interactable = true;
         }
     }
+    
+    public void AIMoveEasyMode()
+    {
+        foreach(Cell cell in cells)
+        {
+            if(cell.cellText.text == "")
+            {
+                cell.FillCell();
+                return;
+            }
+                
+        }
+    }
 }

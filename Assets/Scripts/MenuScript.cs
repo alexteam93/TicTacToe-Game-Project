@@ -9,4 +9,10 @@ public class MenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("PlayScene");
     }
+
+    public void LoadSceneWithAIActive()
+    {
+        GameModeManager.AIActive = true;
+        StartGame();
+    }
 }
