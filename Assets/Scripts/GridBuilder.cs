@@ -81,14 +81,19 @@ public class GridBuilder : MonoBehaviour
     
     public void AIMoveEasyMode()
     {
-        foreach(Cell cell in cells)
+       
+        int index = Random.Range(0, cells.Length);
+        
+        if(cells[index].cellText.text == "")
         {
-            if(cell.cellText.text == "")
-            {
-                cell.FillCell();
-                return;
-            }
-                
+            cells[index].FillCell();
+            return;
         }
+        else
+        {
+            AIMoveEasyMode();
+        }
+                
+        
     }
 }
